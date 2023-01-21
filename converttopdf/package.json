@@ -12,6 +12,7 @@
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "morgan": "~1.9.1",
-    "pdfkit": "^0.13.0"
+    "pdfkit": "^0.13.0",
+    "twitter-api-v2": "^1.14.0"
   }
 }
