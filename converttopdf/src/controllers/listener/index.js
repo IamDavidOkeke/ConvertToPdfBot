@@ -1,7 +1,7 @@
 var stream = require('../stream');
 var {ETwitterStreamEvent} = require('twitter-api-v2')
 
-var data = async function(){
+var listener = async function(){
     var tweetStream = await stream()
     tweetStream.on(
         // Emitted when a Twitter payload (a tweet or not, given the endpoint).
@@ -11,4 +11,4 @@ var data = async function(){
 }
 
 
-module.exports = data
+module.exports = listener
