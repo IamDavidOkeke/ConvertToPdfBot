@@ -1,4 +1,4 @@
-var stream = require('./stream');
+var stream = require('../stream');
 var {ETwitterStreamEvent} = require('twitter-api-v2')
 
 var data = async function(){

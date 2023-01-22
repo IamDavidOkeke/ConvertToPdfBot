@@ -1,4 +1,4 @@
-var appClient = require('../appClient')
+var appClient = require('../../appClient')
 
 
 var stream = (async ()=>{
