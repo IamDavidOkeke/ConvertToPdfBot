@@ -11,10 +11,15 @@ var getStreamRules = async ()=>{
     var rules= await appClient.v2.streamRules()
     return rules
 }
+
+var params = {
+    'tweet.fields':['author_id','conversation_id','entities','in_reply_to_user_id',],
+    expansions:[
+        'author_id','referenced_tweets.id','referenced_tweets.id.author_id','entities.mentions.username','in_reply_to_user_id'
+]}
 var stream = (async ()=>{
-    await updateStreamRules()
     console.log(await getStreamRules())
-    var streams = await appClient.v2.searchStream()
+    var streams = await appClient.v2.searchStream(params)
     return streams
 })
 
