@@ -10,10 +10,26 @@ var findOriginalTweet = async function(conversationId){
     return tweet
 }
 
-var getThread = async function(conversationId, authorId){
+var getReplies = async function(conversationId, authorId){
     var options = `conversation_id:${conversationId} from:${authorId} to:${authorId}`
-    var thread = await appClient.v2.search(options, params)
-    return thread
+    var replies = await appClient.v2.search(options, params)
+    return replies
 }
 
-module.exports = {findOriginalTweet, getThread}
+var getThread =  async function (conversationId){
+    var thread = []
+    var originalTweet = await findOriginalTweet(conversationId)
+    thread.push(originalTweet)
+    var authorId = originalTweet.data.author_id
+    console.log ('Twitter has sent something about author:', originalTweet)
+    var threadPaginator = await getReplies(conversationId, authorId)
+    console.log(threadPaginator)
+    for (const fetchedTweet of threadPaginator){
+    console.log(fetchedTweet)
+    thread.shift(fetchedTweet)
+    }
+    return thread
+
+}
+
+module.exports = { getThread}
