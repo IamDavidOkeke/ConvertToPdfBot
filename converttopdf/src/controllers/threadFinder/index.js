@@ -15,21 +15,32 @@ var getReplies = async function(conversationId, authorId){
     var replies = await appClient.v2.search(options, params)
     return replies
 }
-
+var getAllTweets = async function(threadPaginator){
+    var threadPaginatorAll
+    while(!threadPaginator.done){
+        threadPaginatorAll = await threadPaginator.fetchNext()
+    }
+    console.log('threadPaginatorAll', threadPaginatorAll)
+    return threadPaginatorAll
+}
+var aggregatedThread = function(paginator, arr){
+    for (const fetchedTweet of paginator){
+        console.log('fetchedTweet',fetchedTweet)
+        arr.unshift(fetchedTweet)
+        }
+    return arr
+}
 var getThread =  async function (conversationId){
     var thread = []
     var originalTweet = await findOriginalTweet(conversationId)
-    thread.push(originalTweet)
+    thread.unshift(originalTweet)
     var authorId = originalTweet.data.author_id
     console.log ('Twitter has sent something about author:', originalTweet)
     var threadPaginator = await getReplies(conversationId, authorId)
-    console.log(threadPaginator)
-    for (const fetchedTweet of threadPaginator){
-    console.log(fetchedTweet)
-    thread.shift(fetchedTweet)
-    }
-    return thread
-
+    console.log('threadPaginator', threadPaginator)
+    var threadPaginatorAll = await getAllTweets(threadPaginator)
+    console.log('threadPaginatorAll2', threadPaginatorAll)
+    return  aggregatedThread(threadPaginatorAll, thread)
 }
 
-module.exports = { getThread}
+module.exports = { getThread }
