@@ -2,6 +2,7 @@ var appClient = require('../../appClient')
 
 var params = {
     'tweet.fields':['author_id','conversation_id', 'attachments'],
+    'media.fields':['media_key', 'type','url', 'alt_text'],
     expansions: ['attachments.media_keys']
 }
 
@@ -20,7 +21,6 @@ var getAllTweets = async function(threadPaginator){
     while(!threadPaginator.done){
         threadPaginatorAll = await threadPaginator.fetchNext()
     }
-    console.log('threadPaginatorAll', threadPaginatorAll)
     return threadPaginatorAll
 }
 var aggregatedThread = function(paginator, arr){
@@ -35,11 +35,11 @@ var getThread =  async function (conversationId){
     var originalTweet = await findOriginalTweet(conversationId)
     thread.unshift(originalTweet)
     var authorId = originalTweet.data.author_id
-    console.log ('Twitter has sent something about author:', originalTweet)
+    //console.log ('Twitter has sent something about author:', originalTweet)
     var threadPaginator = await getReplies(conversationId, authorId)
-    console.log('threadPaginator', threadPaginator)
+    //console.log('threadPaginator', threadPaginator)
     var threadPaginatorAll = await getAllTweets(threadPaginator)
-    console.log('threadPaginatorAll2', threadPaginatorAll)
+    //console.log('threadPaginatorAll2', threadPaginatorAll)
     return  aggregatedThread(threadPaginatorAll, thread)
 }
 
