@@ -1,17 +1,27 @@
 var fs = require('fs')
 var PDFDocument = require('pdfkit')
+var path = require('path')
+var {convertUrlToFile} = require('./urlToFile')
 
 var options = {
     autoFirstPage:false
 }
+var mediaPath = path.join(process.cwd(), '/public/pdf/media')
+
 var doc = new PDFDocument(options)
 
-var makePdf = function(path, thread){
+
+var makePdf = async function(path, thread){
     try{
         doc.pipe(fs.createWriteStream(path))
             for(let i = 0; i < thread.length; i++){
+                let text = thread[i].text || thread[i].data.text
+                let medias = thread[i].media || thread[i].includes?.media 
                 doc.addPage()
-                doc.text(thread[i].text || thread[i].data.text)
+                doc.text(text)
+                if(medias && medias.length){
+                   await addMedias(medias)
+                }
             }
         doc.end()
     }catch(e){
@@ -19,4 +29,18 @@ var makePdf = function(path, thread){
     }
 }
 
-module.exports = {makePdf}
+var addMedias = async function(medias){
+    for(let i = 0; i < medias.length; i++){
+        if(medias[i].type === 'photo'){
+            let imagePath = await convertUrlToFile(medias[i].url, mediaPath) 
+            doc.image(imagePath)
+        }else {
+            let imagePath = await convertUrlToFile(medias[i].preview_image_url, mediaPath) 
+            doc.image(imagePath)
+        }
+    }
+}
+
+
+
+module.exports = { makePdf }
