@@ -10,6 +10,29 @@ var mediaPath = path.join(process.cwd(), '/public/pdf/media')
 
 var doc = new PDFDocument(options)
 
+var removeMedia = function(path){
+    fs.unlink(path, (err) => {
+        if (err) {
+            console.log(err)
+        } 
+        console.log(path + ' was deleted');
+      });
+}
+
+var addMedias = async function(medias){
+    for(let i = 0; i < medias.length; i++){
+        if(medias[i].type === 'photo'){
+            let imagePath = await convertUrlToFile(medias[i].url, mediaPath) 
+            doc.image(imagePath)
+            removeMedia(imagePath)
+        }else {
+            let imagePath = await convertUrlToFile(medias[i].preview_image_url, mediaPath) 
+            doc.image(imagePath)
+            removeMedia(imagePath)
+        }
+    }
+}
+
 
 var makePdf = async function(path, thread){
     try{
@@ -26,18 +49,6 @@ var makePdf = async function(path, thread){
         doc.end()
     }catch(e){
         console.log(e)
-    }
-}
-
-var addMedias = async function(medias){
-    for(let i = 0; i < medias.length; i++){
-        if(medias[i].type === 'photo'){
-            let imagePath = await convertUrlToFile(medias[i].url, mediaPath) 
-            doc.image(imagePath)
-        }else {
-            let imagePath = await convertUrlToFile(medias[i].preview_image_url, mediaPath) 
-            doc.image(imagePath)
-        }
     }
 }
 
