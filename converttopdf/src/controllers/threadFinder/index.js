@@ -6,13 +6,13 @@ var params = {
     expansions: ['attachments.media_keys']
 }
 
-var findOriginalTweet = async function(conversationId){
-    var tweet = await appClient.v2.singleTweet(conversationId, params)
+var findOriginalTweet = async function(id){
+    var tweet = await appClient.v2.singleTweet(id, params)
     return tweet
 }
 
-var getReplies = async function(conversationId, authorId){
-    var options = `conversation_id:${conversationId} from:${authorId} to:${authorId}`
+var getReplies = async function(id, authorId){
+    var options = `conversation_id:${id} from:${authorId} to:${authorId}`
     var replies = await appClient.v2.search(options, params)
     return replies
 }
@@ -32,17 +32,17 @@ var aggregatedThread = function(paginator){
         }
     return arr
 } 
-var getThread =  async function (conversationId){
+var getThread =  async function (id){
     try{
-        var originalTweet = await findOriginalTweet(conversationId)
-        var authorId = originalTweet.data.author_id
-        console.log ('Twitter has sent something about author:', originalTweet )
-        var threadPaginator = await getReplies(conversationId, authorId)
+        let tweet = await findOriginalTweet(id)
+        let authorId = tweet.data.author_id
+        console.log ('Twitter has sent something about author:', tweet )
+        let threadPaginator = await getReplies(id, authorId)
         console.log('threadPaginator', threadPaginator)
-        var threadPaginatorAll = await getAllTweets(threadPaginator)
+        let threadPaginatorAll = await getAllTweets(threadPaginator)
         console.log('threadPaginatorAll2', threadPaginatorAll)
-        var thread = aggregatedThread(threadPaginatorAll)
-        thread.unshift(originalTweet)
+        let thread = aggregatedThread(threadPaginatorAll)
+        thread.unshift(tweet)
         return thread
     }catch(e){
         console.log(e)
