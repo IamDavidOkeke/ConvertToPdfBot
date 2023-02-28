@@ -34,9 +34,9 @@ var addMedias = async function(medias){
 }
 
 
-var makePdf = async function(path, thread){
+var makePdf = async function(writeStream, thread){
     try{
-        doc.pipe(fs.createWriteStream(path))
+        doc.pipe(writeStream)
             for(let i = 0; i < thread.length; i++){
                 let text = thread[i].text || thread[i].data.text
                 let medias = thread[i].media || thread[i].includes?.media 
