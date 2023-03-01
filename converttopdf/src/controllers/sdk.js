@@ -32,5 +32,8 @@ var verifyMention = function(tweet){
     }
   }
 
+  var getReply = function(id){
+    return `Hello, \nHere is your pdf \nhttp://localhost:3000/pdf/${id}`
+  }
   
-module.exports = {verifyReply, verifyMention}
+module.exports = {verifyReply, verifyMention, getReply}
