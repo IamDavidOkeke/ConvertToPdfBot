@@ -13,7 +13,7 @@ var verifyMention = function(tweet){
     for (let i= 0 ; i < mentions.length; i++){
        mentions[i].username === "save_pdf"? username.push('save_pdf') : null 
     }
-    return username ? true : false
+    return username.length ? true : false
   }
   
   var verifyReply = function(tweet){
@@ -33,7 +33,7 @@ var verifyMention = function(tweet){
   }
 
   var getReply = function(id){
-    return `Hello, \nHere is your pdf \nhttp://localhost:3000/pdf/${id}`
+    return `Hello, \nHere is your pdf \nhttp://localhost.com/pdf/${id}`
   }
   
 module.exports = {verifyReply, verifyMention, getReply}
