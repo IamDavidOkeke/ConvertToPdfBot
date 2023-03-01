@@ -1,8 +1,36 @@
+*{
+  box-sizing: border-box;
+}
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 16px "PT Sans", Helvetica, Arial, sans-serif;
 }
-
+.container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container main{
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+.container main *{
+  margin: 0;
+}
+.container main *+*{
+  margin-top: 1em;
+  padding: 0;
+}
+.container h1{
+  color: #111111;
+  padding: 0;
+}
 a {
-  color: #00B7FF;
+  font-weight: bold;
+  color: white;
+  background-color: #0072b1 ;
+  border-radius: 5px;
+  padding: 0.5em 1em !important;
+  text-decoration: none;
 }
