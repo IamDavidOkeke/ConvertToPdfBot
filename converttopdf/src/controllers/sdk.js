@@ -33,7 +33,7 @@ var verifyMention = function(tweet){
   }
 
   var getReply = function(id){
-    return `Hello, \nHere is your pdf \nhttp://localhost.com/pdf/${id}`
+    return `Hello, \nHere is your pdf \nhttps://savetweetpdf.web.app/pdf/${id}`
   }
   
 module.exports = {verifyReply, verifyMention, getReply}
