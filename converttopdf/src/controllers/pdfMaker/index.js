@@ -2,7 +2,6 @@ var fs = require('fs')
 var PDFDocument = require('pdfkit')
 var path = require('path')
 var {convertUrlToFile} = require('./urlToFile')
-var {thready} = require('./thread')
 
 var options = {
     autoFirstPage:false,
