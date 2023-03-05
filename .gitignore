@@ -1,6 +1,3 @@
 node_modules
 
-credentials.js
-
-.firebaserc
-firebase.json
+.env
