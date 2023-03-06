@@ -43,6 +43,7 @@ var getThread =  async function (id){
         console.log('threadPaginatorAll2', threadPaginatorAll)
         let thread = aggregatedThread(threadPaginatorAll)
         thread.unshift(tweet)
+        console.log('thread', thread)
         return thread
     }catch(e){
         console.log(e)

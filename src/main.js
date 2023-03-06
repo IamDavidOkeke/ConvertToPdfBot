@@ -5,6 +5,7 @@ var twitterClient = require('./twitterClient.js')
 var { verifyReply, verifyMention, getReply } = require('./controllers/sdk');
 
 var main = async function(){
+  try{
     var tweetStream = await stream(appClient)
 
     tweetStream.on(
@@ -22,6 +23,9 @@ var main = async function(){
           }
         }
       );
+  }catch(e){
+      console.log(e)
+    }
 }
 
 module.exports = main

@@ -3,9 +3,13 @@ const { getThread } = require("../threadFinder")
 
 
 var pdfHandler = async function(req, res, next){
-    let id = req.params.id
-    let thread = await getThread(id)
-    makePdf(res, thread)
+    try{
+        let id = req.params.id
+        let thread = await getThread(id)
+        makePdf(res, thread)
+    }catch(e){
+        console.log(e)
+    }
 }
 
 module.exports = { pdfHandler }
