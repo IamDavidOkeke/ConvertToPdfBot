@@ -5,10 +5,10 @@ var {addMedias} = require('./mediaHandler')
 
 var options = {
     autoFirstPage:false,
-    size: [ 580, 320 ],
+    size: [ 580, 240 ],
     margins: {
-        top:48,
-        bottom:48,
+        top:18,
+        bottom:18,
         left:48,
         right:48
     }
