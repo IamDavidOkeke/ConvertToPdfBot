@@ -5,7 +5,7 @@ var {addMedias} = require('./mediaHandler')
 
 var options = {
     autoFirstPage:false,
-    size: [ 580, 240 ],
+    size: [ 480, 240 ],
     margins: {
         top:18,
         bottom:18,
@@ -19,7 +19,8 @@ var doc = new PDFDocument(options)
 
 var makePdf = async function(writeStream, thread){
     try{
-        doc.pipe(writeStream)
+        var buffers = [];
+        doc.on( "data", function( chunk ) { buffers.push( chunk ); } );
             for(let i = 0; i < thread.length; i++){
                 let text = thread[i].text || thread[i].data.text
                 let medias = thread[i].media || thread[i].includes?.media 
@@ -32,6 +33,9 @@ var makePdf = async function(writeStream, thread){
                 }
             }
         doc.end()
+        doc.on( "end", function() {
+            writeStream.end( Buffer.concat( buffers ), "binary" );
+        } );
     }catch(e){
         console.log(e)
     }
