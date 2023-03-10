@@ -7,7 +7,20 @@ var { verifyReply, verifyMention, getReply } = require('./controllers/sdk');
 var main = async function(){
   try{
     var tweetStream = await stream(appClient)
+    tweetStream.autoReconnect = true;
 
+    tweetStream.on(
+      ETwitterStreamEvent.ConnectionError,
+      err => console.log('Connection error!', err),
+    );
+    tweetStream.on(
+      ETwitterStreamEvent.ConnectionClosed,
+      () => console.log('Connection has been closed.'),
+    );
+    tweetStream.on(
+      ETwitterStreamEvent.DataKeepAlive,
+      () => console.log('Twitter has a keep-alive packet.'),
+    );
     tweetStream.on(
         ETwitterStreamEvent.Data,
          async (tweet) => {
