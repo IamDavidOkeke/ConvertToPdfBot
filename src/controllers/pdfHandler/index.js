@@ -4,10 +4,10 @@ var PDFDocument = require('pdfkit')
 
 var options = {
     autoFirstPage:false,
-    size: [ 580, 300 ],
+    size: [ 580, 260 ],
     margins: {
-        top:18,
-        bottom:18,
+        top:48,
+        bottom:48,
         left:48,
         right:48
     }
