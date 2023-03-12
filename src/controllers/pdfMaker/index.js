@@ -1,25 +1,8 @@
-var fs = require('fs')
-var PDFDocument = require('pdfkit')
-var path = require('path')
 var {addMedias} = require('./mediaHandler')
 
-var options = {
-    autoFirstPage:false,
-    size: [ 580, 300 ],
-    margins: {
-        top:18,
-        bottom:18,
-        left:48,
-        right:48
-    }
-}
 
-var doc = new PDFDocument(options)
-
-
-var makePdf = async function(writeStream, thread){
+var makePdf = async function(doc, thread){
     try{
-        doc.pipe(writeStream)
         for(let i = 0; i < thread.length; i++){
             let text = thread[i].text || thread[i].data.text
             let medias = thread[i].media || thread[i].includes?.media 
@@ -31,7 +14,6 @@ var makePdf = async function(writeStream, thread){
                 await addMedias(medias, doc)
             }
             }
-        doc.end()
     }catch(e){
         console.log(e)
     }
