@@ -13,18 +13,20 @@ var options = {
     }
 }
 
-var doc = new PDFDocument(options)
-
 var pdfHandler = async function(req, res, next){
     try{
+        var doc = new PDFDocument(options)
         res.type( "pdf" )
         let id = req.params.id
+        console.log('id', id)
         let thread = await getThread(id)
+        console.log('thread', thread.length)
         doc.pipe(res)
         await makePdf(doc, thread)
         doc.end()
         await new Promise((resolve,reject)=>{
             res.on('finish', ()=>{
+                console.log('finish')
                 resolve()
             })
             res.on('error', (e)=>{
