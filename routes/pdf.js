@@ -6,7 +6,7 @@ router.get('/:id', function(req, res) {
   res.render('pdf', { title: 'A pdf view' , id: req.params.id});
 });
 router.get('/:id/pdf', async function(req, res, next){
-  await pdfHandler(req, res)
+  return pdfHandler(req, res)
 } );
 
 module.exports = router;
