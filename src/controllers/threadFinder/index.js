@@ -27,7 +27,6 @@ var aggregatedThread = function(paginator){
     var arr = []
     for (const fetchedTweet of paginator){
         fetchedTweet.media = paginator.includes.medias(fetchedTweet)
-        console.log('fetchedTweet',fetchedTweet)
         arr.unshift(fetchedTweet)
         }
     return arr
@@ -36,14 +35,10 @@ var getThread =  async function (id){
     try{
         let tweet = await findOriginalTweet(id)
         let authorId = tweet.data.author_id
-        console.log ('Twitter has sent something about author:', tweet )
         let threadPaginator = await getReplies(id, authorId)
-        console.log('threadPaginator', threadPaginator)
         let threadPaginatorAll = await getAllTweets(threadPaginator)
-        console.log('threadPaginatorAll2', threadPaginatorAll)
         let thread = aggregatedThread(threadPaginatorAll)
         thread.unshift(tweet)
-        console.log('thread', thread)
         return thread
     }catch(e){
         console.log(e)
