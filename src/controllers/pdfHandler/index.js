@@ -6,8 +6,8 @@ var options = {
     autoFirstPage:false,
     size: [ 580, 260 ],
     margins: {
-        top:48,
-        bottom:48,
+        top:26,
+        bottom:18,
         left:48,
         right:48
     }
