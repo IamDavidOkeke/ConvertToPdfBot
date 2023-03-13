@@ -2,8 +2,9 @@ var appClient = require('../../appClient')
 
 var params = {
     'tweet.fields':['author_id','conversation_id', 'attachments'],
+    'user.fields':['id','name','username', 'profile_image_url'],
     'media.fields':['media_key', 'type','url', 'alt_text', 'preview_image_url'],
-    expansions: ['attachments.media_keys']
+    expansions: ['attachments.media_keys', 'author_id']
 }
 
 var findOriginalTweet = async function(id){
